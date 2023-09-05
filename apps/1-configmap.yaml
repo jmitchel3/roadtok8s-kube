@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rk8s-apps
+data:
+  PY_ENDPOINT: "py-book.default.svc.cluster.local"
+  PY_PORT: "8080"
+  JS_ENDPOINT: "js-book.default.svc.cluster.local"
+  JS_PORT: "3000"

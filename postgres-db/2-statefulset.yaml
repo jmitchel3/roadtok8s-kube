@@ -1,0 +1,58 @@
+
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      initContainers:
+        - name: delete-lost-found
+          image: alpine:latest
+          command: ["sh", "-c", "rm -rf /mnt/lost+found"]
+          volumeMounts:
+            - name: db2-vol
+              mountPath: /mnt
+      containers:
+      - name: postgres-container
+        image: postgres:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret
+              key: DB_NAME
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-db-secret
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: db2-vol
+          mountPath: /var/lib/postgresql
+        
+  volumeClaimTemplates:
+  - metadata:
+      name: db2-vol
+    spec:
+      storageClassName: linode-block-storage-retain
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 22Gi

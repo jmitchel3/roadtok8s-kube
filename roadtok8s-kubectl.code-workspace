@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.osx": {
+            "KUBECONFIG": "${workspaceFolder}/.kube/kubeconfig.yaml",
+            "PY_PORT": "8080",
+            "JS_PORT": "3000"
+        },
+        "terminal.integrated.env.windows": {
+            "KUBECONFIG": "${workspaceFolder}\\.kube\\kubeconfig.yaml",
+            "PY_PORT": "8080",
+            "JS_PORT": "3000"
+        },
+        "terminal.integrated.env.linux": {
+            "KUBECONFIG": "${workspaceFolder}/.kube/kubeconfig.yaml",
+            "PY_PORT": "8080",
+            "JS_PORT": "3000"
+        },
+	}
+}

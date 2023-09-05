@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: js-deploy
+  template:
+    metadata:
+      labels:
+        app: js-deploy
+    spec:
+      containers:
+        - name: rk8s-js
+          image: codingforentrepreneurs/rk8s-js:latest
+          ports:
+          - name: http-port
+            containerPort: 3000
+          env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: rk8s-apps
+                key: JS_PORT
+          envFrom:
+          - configMapRef:
+              name: rk8s-apps

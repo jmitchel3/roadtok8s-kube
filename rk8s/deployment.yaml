@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rk8s-deployment
+  labels:
+    app: rk8s-deploy
+spec:
+  # replicas: 20
+  selector:
+    matchLabels:
+      app: rk8s-pods
+  template:
+    metadata:
+      labels:
+        app: rk8s-pods
+    spec:
+      containers:
+      - name: rk8s-nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

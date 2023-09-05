@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: py-deploy
+  template:
+    metadata:
+      labels:
+        app: py-deploy
+    spec:
+      containers:
+        - name: rk8s-py
+          image: codingforentrepreneurs/rk8s-py:latest
+          ports:
+          - name: http-port
+            containerPort: 8080
+          env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: rk8s-apps
+                key: PY_PORT
+          envFrom:
+          - configMapRef:
+              name: rk8s-apps

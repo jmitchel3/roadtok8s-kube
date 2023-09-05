@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rk8s-deployment
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      app: rk8s-nginx
+  template:
+    metadata:
+      labels:
+        app: rk8s-nginx
+    spec:
+      containers:
+      - name: rk8s-nginx
+        image: nginx:latest

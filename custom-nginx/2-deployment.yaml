@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-nginx
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      app: custom-nginx
+  template:
+    metadata:
+      labels:
+        app: custom-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+        - name: my-configmap-volume
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+      volumes:
+      - name: my-configmap-volume
+        configMap:
+          name: nginx-configmap
