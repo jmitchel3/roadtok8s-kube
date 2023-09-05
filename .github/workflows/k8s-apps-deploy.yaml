@@ -7,6 +7,8 @@ jobs:
     name: Verify K8s Service Account
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo Code
+        uses: actions/checkout@v4
       - uses: azure/setup-kubectl@v3
       - name: Create/Verify `.kube` directory
         run: mkdir -p ~/.kube/
@@ -37,4 +39,4 @@ jobs:
       - name: Echo deployments
         run: |
           kubectl get deployments
-          
+
