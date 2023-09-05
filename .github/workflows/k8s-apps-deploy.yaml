@@ -23,8 +23,18 @@ jobs:
           kubectl get deployments
       - name: Apply App Changes
         run: |
-          kubectl apply apps/
+          kubectl apply -f apps/
       - name: Rollout Apps
         run: |
           kubectl rollout restart deployment -n default py-book
           kubectl rollout restart deployment -n default js-book
+      - name: Sleep for 90 seconds
+        run: |
+          sleep 90
+      - name: Echo pods
+        run: |
+          kubectl get pods
+      - name: Echo deployments
+        run: |
+          kubectl get deployments
+          
